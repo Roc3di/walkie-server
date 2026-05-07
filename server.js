@@ -117,7 +117,8 @@ wss.on('connection', (ws) => {
       room.members.set(clientId, member);
       clients.set(clientId, { ws, roomId, nickname });
 
-      send(ws, { type: 'joined', clientId, room: roomSnapshot(room) });
+      console.log('JOIN', { roomId, clientId, nickname, role, channel, pinOk: true, roomLocked: room.locked });
+      send(ws, { type: 'joined', clientId, room: roomSnapshot(room), debug: { roomId, nickname, role, channel, roomLocked: room.locked } });
       broadcast(room, { type: 'peer-joined', peer: { clientId, nickname, role, channel, muted: false, priority: !!msg.priority } }, clientId);
       return;
     }

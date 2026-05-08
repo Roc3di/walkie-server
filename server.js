@@ -95,10 +95,12 @@ wss.on('connection', (ws) => {
   const clientId = crypto.randomUUID();
 
   ws.on('message', (raw) => {
+    console.log('WS MESSAGE RAW', String(raw));
     let msg;
     try { msg = JSON.parse(raw.toString()); } catch { return; }
 
     if (msg.type === 'join') {
+      console.log('JOIN RECEIVED', roomId, msg.nickname, msg.channel, msg.role);
       const roomId = sanitize(msg.roomId);
       const room = getRoom(roomId);
       const nickname = display(msg.nickname || `user-${clientId.slice(0, 4)}`);
